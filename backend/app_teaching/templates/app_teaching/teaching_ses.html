@@ -1,0 +1,293 @@
+{% extends 'partials/base.html' %}
+
+{%block content%}
+<style>
+  {
+    box-sizing: border-box;
+  }
+  
+  .column {
+    width: 70%;
+    padding: 50px;
+    margin-left: auto;
+    margin-right: auto ;
+  }
+  
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  </style>
+
+<center>
+  <div class="selectBox"><a >Choose a course type</a>
+    <select id="typeselect">
+      <option value = "{%for p in personcourses%}{%if p.course_type != 'FP'%}{%if p.course_type != 'MS'%}{{p.amount}},{%endif%}{%endif%}{%endfor%} ">All</option>
+      <option value = "{%for p in personcourses%}{%if p.course_type == 'O1'%}{{p.amount}},{%endif%}{%endfor%} ">O1</option>
+      <option value = "{%for p in personcourses%}{%if p.course_type == 'O2'%} {{p.amount}},{%endif%}{%endfor%} ">O2</option>
+      <option value = "{%for p in personcourses%}{%if p.course_type == 'FE'%} {{p.amount}},{%endif%}{%endfor%} ">FE</option>
+      <option value = "{%for p in personcourses%}{%if p.course.type == 'PH'%} {{p.amount}},{%endif%}{%endfor%} ">PH</option>
+  
+    </select>
+    
+  </div>
+</center>
+
+<center>
+<div class="row">
+
+  <div class="column">
+    <canvas id="myChart2"></canvas>
+
+  </div>
+</div>
+</center>
+
+  
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+    <script>
+
+      
+
+
+      function onlyUnique(value, index, array) {
+        return array.indexOf(value) === index;
+      }
+
+      var personcourses = {{personcourses|safe}}
+      {% comment %} console.log(personcourses) {% endcomment %}
+      var lineChartData = {
+        labels:personcourses.filter((personcourse) => (personcourse['course_group'] == 's' )).filter((personcourse) => (personcourse['course_type'] == 'O1' || personcourse['course_type'] == 'O2' || personcourse['course_type'] == 'FE' || personcourse['course_type'] == 'PH' )).map((personcourse)=>personcourse['course']).filter(onlyUnique),
+
+          datasets: []
+      },
+      
+      array = [{Teaching: personcourses.filter((personcourse) => (personcourse['course_group'] == 's' )).filter((personcourse) => (personcourse['course_type'] == 'O1' || personcourse['course_type'] == 'O2' || personcourse['course_type'] == 'FE' || personcourse['course_type'] == 'PH')).map((personcourse)=>personcourse['course']), Lecturer :  personcourses.filter((personcourse) => (personcourse['course_group'] == 's' )).filter((personcourse) => (personcourse['course_type'] == 'O1' || personcourse['course_type'] == 'O2' || personcourse['course_type'] == 'FE' || personcourse['course_type'] == 'PH')).map((personcourse)=>personcourse['person']), Pourcent: personcourses.filter((personcourse) => (personcourse['course_group'] == 's' )).filter((personcourse) => (personcourse['course_type'] == 'O1' || personcourse['course_type'] == 'O2' || personcourse['course_type'] == 'FE' || personcourse['course_type'] == 'PH')).map((personcourse)=>personcourse['amount']),}][0];
+
+        Teaching  = personcourses.filter((personcourse) => (personcourse['course_group'] == 's' )).filter((personcourse) => (personcourse['course_type'] == 'O1' || personcourse['course_type'] == 'O2' || personcourse['course_type'] == 'FE' || personcourse['course_type'] == 'PH')).map((personcourse)=>personcourse['course']).filter(onlyUnique)
+
+
+
+          Lecturer =personcourses.map((personcourse)=>personcourse['person'])
+
+          let unique_lecturer = Lecturer.filter(function(value, index, array) {
+            return array.indexOf(value) === index;
+          }); 
+
+
+          let text = "["
+          let text2 = "]"
+
+          var array_new=[]
+          var array_new_total =[]
+          var p=0
+          for (k = 0; k <unique_lecturer.length; k++){
+            for(i=0;i<Teaching.length;i++){
+
+              for ( j = 0; j < array.Teaching.length; j++) { 
+                if (((unique_lecturer[k] != array.Lecturer[j]) && (Teaching[i] != array.Teaching[j])) || ((unique_lecturer[k] == array.Lecturer[j]) && (Teaching[i] != array.Teaching[j])) || ((unique_lecturer[k] != array.Lecturer[j]) && (Teaching[i] == array.Teaching[j]))) {
+                  p=0
+                  } 
+                if ((unique_lecturer[k] == array.Lecturer[j]) && (Teaching[i] == array.Teaching[j])){
+                  p=array.Pourcent[j] 
+
+                  j=array.length
+                }
+               }
+               array_new.push(p)
+
+              }
+
+              array_new_total.push(text.concat([array_new]).concat(text2))
+              array_new=[]
+             //}
+          }
+
+
+          array_indecol = array
+
+    array_new_total.forEach(function (a, i) {
+      if (JSON.parse(a).every(item => item === 0))
+          {//console.log(a,i)
+            console.log('console')
+            //data.splice(i, 1);labels.splice(i, 1);i--;
+          }
+          else{
+          lineChartData.datasets.push({
+              label:  unique_lecturer[i],
+              fillColor: 'rgba(220,220,220,0.2)',
+              strokeColor: 'rgba(220,220,220,1)',
+              pointColor: 'rgba(220,220,220,1)',
+              pointStrokeColor: '#fff',
+              pointHighlightFill: '#fff',
+              pointHighlightStroke:
+                  'rgba(220,220,220,1)',
+              data: JSON.parse(a)
+              
+           })
+          };
+          //console.log(lineChartData.datasets[i].data,lineChartData.datasets[i].label)
+
+      }
+    
+    
+   );
+
+   lineChartData_total_indecol = lineChartData
+
+
+      const ctx2 = document.getElementById('myChart2');
+      teaching_load_indecol = new Chart(ctx2, {
+          type: 'bar',
+          data: {
+              labels: lineChartData.labels ,
+              datasets: lineChartData.datasets
+          },
+          
+          options: {
+            plugins: {
+              title: {
+                  display: true,
+                  text: 'Sustainable Energy Systems ',
+                  padding: {
+                      top: 10,
+                      bottom: 30
+                  }
+              }
+            },
+            
+              skipNull:true,
+              indexAxis :'y',
+              
+              scales: {
+                x:{
+                  stacked: true,
+                },
+                  y: {
+                    stacked: true,
+                      
+                  }
+              }
+          }
+      }
+      
+      );
+
+     
+      
+      const typeselect = document.getElementById('typeselect');
+      typeselect.addEventListener('change',trackers);   
+      
+      function trackers(){
+        var type = (typeselect.options[typeselect.selectedIndex].text)
+
+        if (type !== 'All' ){
+
+
+
+         filterlabels_indecol =  personcourses.filter((personcourse) => (personcourse['course_group'] == 's' )).filter((personcourse) => (personcourse['course_type'] == type)).map((personcourse)=>personcourse['course']).filter(onlyUnique)
+         filteramount_indecol =  personcourses.filter((personcourse) => (personcourse['course_group'] == 's' )).filter((personcourse) => (personcourse['course_type'] == type)).map((personcourse)=>personcourse['amount'])
+         filterperson_indecol =  personcourses.filter((personcourse) => (personcourse['course_group'] == 's' )).filter((personcourse) => (personcourse['course_type'] == type)).map((personcourse)=>personcourse['person']).filter(onlyUnique)
+
+         var array_new_indecol=[]
+         var array_new_total_indecol =[]
+         var p=0
+
+         
+         for (k = 0; k <filterperson_indecol.length; k++){
+           for(i=0;i<filterlabels_indecol.length;i++){
+
+             for ( j = 0; j < array_indecol.Teaching.length; j++) { 
+               if (((filterperson_indecol[k] != array_indecol.Lecturer[j]) && (filterlabels_indecol[i] != array_indecol.Teaching[j])) || ((filterperson_indecol[k] == array_indecol.Lecturer[j]) && (filterlabels_indecol[i] != array_indecol.Teaching[j])) || ((filterperson_indecol[k] != array_indecol.Lecturer[j]) && (filterlabels_indecol[i] == array_indecol.Teaching[j]))) {
+                 p=0
+                 } 
+               if ((filterperson_indecol[k] == array_indecol.Lecturer[j]) && (filterlabels_indecol[i] == array_indecol.Teaching[j])){
+                 p=array_indecol.Pourcent[j] 
+
+                 j=array_indecol.length
+               }
+              }
+              array_new_indecol.push(p)
+
+             }
+
+             array_new_total_indecol.push(text.concat([array_new_indecol]).concat(text2))
+             array_new_indecol=[]
+          
+         }
+         console.log('filter',filterperson_indecol)
+
+         var lineChartData_indecol = {
+           labels: personcourses.filter((personcourse) => (personcourse['course_group'] == 's' )).filter((personcourse) => (personcourse['course_type'] == type)).map((personcourse)=>personcourse['course']).filter(onlyUnique),
+
+             datasets: []
+         }
+         
+         array_new_total_indecol.forEach(function (a, i) {
+           console.log(a,i)
+           if (JSON.parse(a).every(item => item === 0))
+               {//console.log(a,i)
+                 console.log('console')
+                 //data.splice(i, 1);labels.splice(i, 1);i--;
+               }
+               else{
+                 lineChartData_indecol.datasets.push({
+                   label:  filterperson_indecol[i],
+                   fillColor: 'rgba(220,220,220,0.2)',
+                   strokeColor: 'rgba(220,220,220,1)',
+                   pointColor: 'rgba(220,220,220,1)',
+                   pointStrokeColor: '#fff',
+                   pointHighlightFill: '#fff',
+                   pointHighlightStroke:
+                       'rgba(220,220,220,1)',
+                   data: JSON.parse(a)
+                   
+                })
+               };
+     
+           }
+         
+         
+        );
+
+        
+       
+       
+    
+
+
+          teaching_load_indecol.data.labels = lineChartData_indecol.labels
+          teaching_load_indecol.data.datasets = lineChartData_indecol.datasets 
+          
+
+        }
+
+        else if (type == 'All'){
+          
+          
+          teaching_load_indecol.data.labels = lineChartData_total_indecol.labels
+          teaching_load_indecol.data.datasets = lineChartData_total_indecol.datasets 
+          
+          
+        }
+
+
+        
+
+
+
+  
+        teaching_load_indecol.update();
+      
+
+
+
+      }
+ </script>
+
+</div> {%endblock%}

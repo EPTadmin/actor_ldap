@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{%block title %}
+List of Courses Sustainable Energy Systems
+{%endblock title %}
+
+{%block content%}
+<h1>Courses SES</h1>
+
+<ul class = "list-group">
+Course Type O1 :
+<br>
+
+{%for course in courses_ses%}
+{%if course.group == 's'%}
+
+{%if course.type == 'O1'%}
+    <a class = "list-group-item list-group-item-action" href = " {% url 'course_details' course.id %}">
+        {{course}}
+    </a>  
+{%endif%}
+{%endif%}
+
+{%endfor%}
+<br>
+
+Course Type O2 :
+<br>
+
+{%for course in courses_ses%}
+{%if course.group == 's'%}
+
+{%if course.type == 'O2'%}
+    <a class = "list-group-item list-group-item-action" href = " {% url 'course_details' course.id %}">
+        {{course}}
+    </a>  
+{%endif%}
+{%endif%}
+
+{%endfor%}
+<br>
+
+Course Type FE :
+<br>
+
+{%for course in courses_ses%}
+{%if course.group == 's'%}
+
+{%if course.type == 'FE'%}
+    <a class = "list-group-item list-group-item-action" href = " {% url 'course_details' course.id %}">
+        {{course}}
+    </a>  
+{%endif%}
+{%endif%}
+
+{%endfor%}
+<br>
+
+Course Type FP :
+<br>
+
+{%for course in courses_ses%}
+{%if course.group == 's'%}
+
+{%if course.type == 'FP'%}
+    <a class = "list-group-item list-group-item-action" href = " {% url 'course_details' course.id %}">
+        {{course}}
+    </a>  
+{%endif%}
+{%endif%}
+
+{%endfor%}
+<br>
+
+Course Type MS :
+<br>
+
+{%for course in courses_ses%}
+
+{%if course.type == 'MS'%}
+    <a class = "list-group-item list-group-item-action" href = " {% url 'course_details' course.id %}">
+        {{course}}
+    </a>  
+{%endif%}
+
+{%endfor%}
+<br>
+
+Course Type PH :
+<br>
+
+{%for course in courses_ses%}
+
+{%if course.type == 'PH'%}
+    <a class = "list-group-item list-group-item-action" href = " {% url 'course_details' course.id %}">
+        {{course}}
+    </a>  
+{%endif%}
+
+{%endfor%}
+<br>
+
+Course Type Other :
+<br>
+
+{%for course in courses_ses%}
+{%if course.group == 's'%}
+
+{%if course.type == '-'%}
+    <a class = "list-group-item list-group-item-action" href = " {% url 'course_details' course.id %}">
+        {{course}}
+
+    </a>  
+{%endif%}
+{%endif%}
+
+{%endfor%}
+</ul>
+{%endblock content%}

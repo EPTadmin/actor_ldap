@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{%block title %}
+{{person}}
+{%endblock title %}
+
+{%block content%}
+<h1>{{person}}</h1>
+<p>
+</p>
+
+
+
+<b>Role : </b>{{person.position}}</p>
+{{personcourse}}
+This person has also contributed to :
+
+<ul class ="list-group">
+
+
+
+            {%for course in person.courses.all%}
+     
+          <a class = "list-group-item list-group-item-action" href={%url 'course_details' course.id %}>{{course}}</a>
+
+          {%endfor%}
+
+
+
+<br>
+
+</ul>
+
+{%endblock content%}

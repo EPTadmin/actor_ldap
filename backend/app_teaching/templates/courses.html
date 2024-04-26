@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{%block title %}
+List of Courses at EPT
+{%endblock title %}
+
+{%block content%}
+<h1>Courses</h1>
+
+<ul class = "list-group">
+    <br>
+    <h2>Course O1 :</h2>
+{%for course in courses%}
+{%if course.type == 'O1' %} 
+
+
+    <a class = "list-group-item list-group-item-action" href = " {% url 'course_details' course.id %}">
+        {{course}}
+    </a>
+{%endif%}
+{%endfor%}
+
+<br>
+<h2>Course O2 :</h2>
+{%for course in courses%}
+{%if course.type == 'O2' %} 
+
+
+<a class = "list-group-item list-group-item-action" href = " {% url 'course_details' course.id %}">
+    {{course}}
+</a>
+{%endif%}
+{%endfor%}
+
+<br>
+<h2>Course FE :</h2>
+{%for course in courses%}
+{%if course.type == 'FE' %} 
+
+
+<a class = "list-group-item list-group-item-action" href = " {% url 'course_details' course.id %}">
+    {{course}}
+</a>
+{%endif%}
+{%endfor%}
+
+<br>
+<h2>Course FP :</h2>
+{%for course in courses%}
+{%if course.type == 'FP' %} 
+
+
+<a class = "list-group-item list-group-item-action" href = " {% url 'course_details' course.id %}">
+    {{course}}
+</a>
+{%endif%}
+{%endfor%}
+
+<br>
+<h2>Course MS :</h2>
+{%for course in courses%}
+{%if course.type == 'MS' %} 
+
+
+<a class = "list-group-item list-group-item-action" href = " {% url 'course_details' course.id %}">
+    {{course}}
+</a>
+{%endif%}
+{%endfor%}
+
+<br>
+<h2>Course PH :</h2>
+{%for course in courses%}
+{%if course.type == 'PH' %} 
+
+
+<a class = "list-group-item list-group-item-action" href = " {% url 'course_details' course.id %}">
+    {{course}}
+</a>
+{%endif%}
+{%endfor%}
+</ul>
+{%endblock content%}

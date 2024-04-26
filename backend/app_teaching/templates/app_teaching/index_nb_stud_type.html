@@ -1,0 +1,107 @@
+{% extends 'partials/base.html' %}
+
+{%block content%}
+
+<div class="chartBox">
+  <canvas id="myChart" height="100"></canvas>
+<div>
+  <div class="selectBox"><a >Choose a group</a>
+    <select id="groupselect">
+      <option value = "{%for course in courses%} {{course.nb_student}} {{course.nb_student}},{%endfor%} ">All</option>
+      <option value = "{%for course in courses%}{%if course.group == 's'%} {{course.nb_student}},{%endif%}{%endfor%} ">Sustainable Energy Systems</option>
+      <option value = "{%for course in courses%}{%if course.group == 'i'%} {{course.nb_student}},{%endif%}{%endfor%} ">IndEcol</option>
+      <option value = "{%for course in courses%}{%if course.group == 'p'%} {{course.nb_student}},{%endif%}{%endfor%} ">Process and Power</option>
+      <option value = "{%for course in courses%}{%if course.group == 't'%} {{course.nb_student}},{%endif%}{%endfor%} ">Thermo-Fluid</option>
+    </select>
+    <br>
+  </div>
+
+<div class="selectBox"><a >Choose a course type</a>
+  <select id="typeselect">
+    <option value = "{%for course in courses%} {{course.nb_student}},{%endfor%} ">All</option>
+
+    <option value = "{%for course in courses%}{%if course.type == 'O1'%} {{course.nb_student}},{%endif%}{%endfor%} ">O1</option>
+    <option value = "{%for course in courses%}{%if course.type == 'O2'%} {{course.nb_student}},{%endif%}{%endfor%} ">O2</option>
+    <option value = "{%for course in courses%}{%if course.type == 'FE'%} {{course.nb_student}},{%endif%}{%endfor%} ">FE</option>
+    <option value = "{%for course in courses%}{%if course.type == 'FP'%} {{course.nb_student}},{%endif%}{%endfor%} ">FP</option>
+    <option value = "{%for course in courses%}{%if course.type == 'MS'%} {{course.nb_student}},{%endif%}{%endfor%} ">MS</option>
+    <option value = "{%for course in courses%}{%if course.type == 'PH'%} {{course.nb_student}},{%endif%}{%endfor%} ">PH</option>
+
+  </select>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+
+  function getRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+  var courses = {{courses|safe}};
+
+const mytest = new Chart()
+
+  const ctx = document.getElementById('myChart');
+
+  const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: [{%for course in courses%}  '{{course.course_id}}',  {%endfor%} ],
+
+      datasets: [{
+        label: 'Number of Students per course type and per group',
+        data: [{%for course in courses%}  {{course.nb_student}},{%endfor%}],
+        //backgroundColor: [getRandomColor()], 
+
+        borderWidth: 1
+      },
+      ]
+    },
+    options: {
+      indexAxis: 'y',
+      scales: {
+
+      }
+    }
+  });
+  const groupselect = document.getElementById('groupselect');
+  groupselect.addEventListener('change',trackers);
+  
+
+  const typeselect = document.getElementById('typeselect');
+  typeselect.addEventListener('change',trackers);
+
+
+
+  function trackers(){
+    var type = (typeselect.options[typeselect.selectedIndex].text)
+    var group = (groupselect.options[groupselect.selectedIndex].text)
+
+    var group_code = {'Thermo-Fluid':'t', 'IndEcol':'i', 'Process and Power':'p', 'Sustainable Energy Systems':'s'}
+
+    if (type !== 'All' && group !=='All'){
+      myChart.data.labels =  courses.filter((course) => (course.type == type && course.group == group_code[group])).map((course)=>course['course_id'])
+    }else if (type == 'All' && group =='All'){
+      myChart.data.labels =  courses.map((course)=>course['course_id'])
+    }else if (type == 'All'){
+      myChart.data.labels =  courses.filter((course) => (course.group == group_code[group])).map((course)=>course['course_id'])
+    }else{
+      myChart.data.labels =  courses.filter((course) => (course.type == type)).map((course)=>course['course_id'])
+    }
+
+    console.log('type',typeselect.options[typeselect.selectedIndex].text);
+    console.log('value',typeselect.value.split(','))
+    myChart.data.datasets[0].data = typeselect.value.split(',');
+    myChart.update();
+  }
+
+
+</script>
+
+</div> {%endblock%}

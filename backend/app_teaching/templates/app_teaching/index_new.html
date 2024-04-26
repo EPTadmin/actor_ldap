@@ -1,0 +1,224 @@
+{% extends 'partials/base.html' %}
+
+{%block content%}
+
+ 
+
+
+  
+  <div class="chartBox">
+    <canvas id="myChart"height="200"></canvas>
+  <div>
+  <div class="selectBox"><a >Choose a group</a>
+    <select id="groupselect">
+      {% comment %} <option value = "{%for p in personcourses%}{%if p.course.type != 'FP'%}{%if p.course.type != 'MS'%} {{p.amount}},{%endif%}{%endif%}{%endfor%}" >All</option> {% endcomment %}
+      <option value = "{%for p in personcourses%}{%if p.course.type != 'FP'%}{%if p.course.type != 'MS'%}  {{p.amount}},{%endif%}{%endif%}{%endfor%}" >All</option> 
+      <option value = "{%for p in personcourses%}{%if p.course.type != 'FP'%}{%if p.course.type != 'MS'%}{%if p.group == 's'%} {{p.amount}},{%endif%}{%endif%}{%endif%}{%endfor%} ">Sustainable Energy Systems</option>
+      <option value = "{%for p in personcourses%}{%if p.course.type != 'FP'%}{%if p.course.type != 'MS'%}{%if p.group == 'i'%} {{p.amount}},{%endif%}{%endif%}{%endif%}{%endfor%} ">IndEcol</option>
+      <option value = "{%for p in personcourses%}{%if p.course.type != 'FP'%}{%if p.course.type != 'MS'%}{%if p.group == 'p'%} {{p.amount}},{%endif%}{%endif%}{%endif%}{%endfor%} ">Process and Power</option>
+      <option value = "{%for p in personcourses%}{%if p.course.type != 'FP'%}{%if p.course.type != 'MS'%}{%if p.group == 't'%} {{p.amount}},{%endif%}{%endif%}{%endif%}{%endfor%} ">Thermo-Fluid</option>
+    </select>
+    <br>
+  </div>
+  
+  <div class="selectBox"><a >Choose a course type</a>
+    <select id="typeselect">
+      {% comment %} <option value = "{%for p in personcourses%}{%if p.course.type != 'FP'%}{%if p.course.type != 'MS'%}{{p.amount}},{%endif%}{%endif%}{%endfor%} ">All</option> {% endcomment %}
+      <option value = "{%for p in personcourses%}{%if p.course.type != 'FP'%}{%if p.course.type != 'MS'%}{{p.amount}},{%endif%}{%endif%}{%endfor%} ">All</option>
+      <option value = "{%for p in personcourses%}{%if p.course.type == 'O1'%} {{p.amount}},{%endif%}{%endfor%} ">O1</option>
+      <option value = "{%for p in personcourses%}{%if p.course.type == 'O2'%} {{p.amount}},{%endif%}{%endfor%} ">O2</option>
+      <option value = "{%for p in personcourses%}{%if p.course.type == 'FE'%} {{p.amount}},{%endif%}{%endfor%} ">FE</option>
+      {% comment %} <option value = "{%for p in personcourses%}{%if p.course.type == 'FP'%} {{p.amount}},{%endif%}{%endfor%} ">FP</option> 
+     <option value = "{%for p in personcourses%}{%if p.course.type == 'MS'%} {{p.amount}},{%endif%}{%endfor%} ">MS</option>   {% endcomment %}
+      <option value = "{%for p in personcourses%}{%if p.course.type == 'PH'%} {{p.amount}},{%endif%}{%endfor%} ">PH</option>
+  
+    </select>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+    <script>
+
+
+      function onlyUnique(value, index, array) {
+        return array.indexOf(value) === index;
+      }
+
+      var courses = {{courses|safe}};
+     console.log(courses);
+
+      console.log('courses',courses)
+      var personcourses = {{personcourses|safe}}
+      var lineChartData = {
+          //labels: courses.map((course)=>course['course_id']),
+          labels:personcourses.filter((personcourse) => (personcourse['course_type'] == 'O1' || personcourse['course_type'] == 'O2' || personcourse['course_type'] == 'FE' || personcourse['course_type'] == 'PH')).map((personcourse)=>personcourse['course']).filter(onlyUnique),
+          datasets: []
+      },
+          array = [{Teaching: personcourses.filter((personcourse) => (personcourse['course_type'] == 'O1' || personcourse['course_type'] == 'O2' || personcourse['course_type'] == 'FE' || personcourse['course_type'] == 'PH')).map((personcourse)=>personcourse['course']), Lecturer :  personcourses.filter((personcourse) => (personcourse['course_type'] == 'O1' || personcourse['course_type'] == 'O2' || personcourse['course_type'] == 'FE' || personcourse['course_type'] == 'PH')).map((personcourse)=>personcourse['person']), Pourcent: personcourses.filter((personcourse) => (personcourse['course_type'] == 'O1' || personcourse['course_type'] == 'O2' || personcourse['course_type'] == 'FE' || personcourse['course_type'] == 'PH')).map((personcourse)=>personcourse['amount']),}][0];
+          console.log('array',array)
+
+          Teaching = personcourses.map((personcourse)=>personcourse['course']).filter(onlyUnique)
+          teaching_o1 = personcourses.filter((personcourse) => (personcourse['course_type'] == 'O1' || personcourse['course_type'] == 'O2' || personcourse['course_type'] == 'FE' || personcourse['course_type'] == 'PH')).map((personcourse)=>personcourse['course'])
+          teaching_o1=teaching_o1.filter(onlyUnique)
+          console.log('teaching unique',teaching_o1)
+          Lecturer =personcourses.map((personcourse)=>personcourse['person'])
+        Teaching = teaching_o1
+        console.log('comparison',Teaching.length,teaching_o1.length)
+
+
+          let unique_lecturer = Lecturer.filter(onlyUnique)
+      {% comment %} console.log('unique',lineChartData.labels) {% endcomment %}
+          let text = "["
+          let text2 = "]"
+
+          var array_new=[]
+          var array_new_total =[]
+          var p=0
+
+
+         for (k = 0; k <unique_lecturer.length; k++){
+            for(i=0;i<Teaching.length;i++){
+
+              for ( j = 0; j < array['Teaching'].length; j++) { 
+                if (((unique_lecturer[k] != array['Lecturer'][j]) && (Teaching[i] != array['Teaching'][j])) || ((unique_lecturer[k] == array['Lecturer'][j]) && (Teaching[i] != array['Teaching'][j])) || ((unique_lecturer[k] != array['Lecturer'][j]) && (Teaching[i] == array['Teaching'][j]))) {
+                  p=0
+                  } 
+                if ((unique_lecturer[k] == array['Lecturer'][j]) && (Teaching[i] == array['Teaching'][j])){
+                  p=array['Pourcent'][j]   
+                  j=array['Teaching'].length
+                }
+               }
+               array_new.push(p)
+
+              }
+
+              array_new_total.push(text.concat([array_new]).concat(text2))
+              array_new=[]
+             //}
+
+            } 
+
+
+
+            //console.log('line',lineChartData.labels)
+
+            //console.log('array new total',array_new_total.length)
+
+          array_new_total.forEach(function (a, i) {
+          if (JSON.parse(a).every(item => item === 0)){
+            console.log('ok')
+            //data.splice(i, 1);labels.splice(i, 1);i--;
+          }
+          else{
+          lineChartData.datasets.push({
+              label:  unique_lecturer[i],
+              fillColor: 'rgba(220,220,220,0.2)',
+              strokeColor: 'rgba(220,220,220,1)',
+              pointColor: 'rgba(220,220,220,1)',
+              pointStrokeColor: '#fff',
+              pointHighlightFill: '#fff',
+              pointHighlightStroke:
+                  'rgba(220,220,220,1)',
+              data: JSON.parse(a)
+              
+          })
+        }
+        ;
+        //console.log(a.length,i.length)
+        //console.log('json',a.length,i,JSON.parse(a))
+          //console.log('linechart',lineChartData.datasets[0].data)
+      } 
+    
+    
+    );  
+
+      
+    const ctx = document.getElementById('myChart');
+
+      teaching_load = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: lineChartData.labels ,
+              datasets: lineChartData.datasets
+          },
+          
+          options: {
+              skipNull:true,
+              indexAxis: 'y',
+
+              scales: {
+                x:{
+                  stacked: true,
+                },
+                  y: {
+                    stacked: true,
+                      
+                  }
+              }
+          }
+      }
+
+      ); 
+      
+      {% comment %} console.log('courses',teaching_load.data.labels)
+
+      console.log('teaching',teaching_load.data.datasets[0].data) {% endcomment %}
+
+    const groupselect = document.getElementById('groupselect');
+      groupselect.addEventListener('change',trackers);
+      
+    
+      const typeselect = document.getElementById('typeselect');
+      typeselect.addEventListener('change',trackers);   
+     
+      function trackers(){
+
+        var type = (typeselect.options[typeselect.selectedIndex].text)
+        var group = (groupselect.options[groupselect.selectedIndex].text)
+        var group_code = {'Thermo-Fluid':'t', 'IndEcol':'i', 'Process and Power':'p', 'Sustainable Energy Systems':'s'}
+    
+        //if (type !== 'All' && group !=='All'){
+        //  console.log(type,group)
+        //  teaching_load.data.labels =  courses.filter((course) => (course.type == type && course.group == group_code[group])).map((course)=>course['course_id'])
+        //  console.log('diff de all',teaching_load.data.labels)
+        //}else if (type == 'All' && group =='All'){
+         // teaching_load.data.labels =  teaching_o1
+          //console.log('all,all',teaching_load.data.labels)
+        //}else if (type == 'All' && group !='All'){
+         // teaching_load.data.labels =  courses.filter((course) => (course.type == 'O1' || course.type == 'O2' || course.type == 'FE' || course.type == 'PH')).filter((course) => (course.group == group_code[group])).map((course)=>course['course_id'])
+          //console.log('all type',teaching_load.data.labels)
+
+        //}else if(type != 'All' && group =='All'){
+         // teaching_load.data.labels =  courses.filter((course) => (course.type == type)).map((course)=>course['course_id'])
+        //} 
+
+        if (type !== 'All'){
+          console.log(type)
+          teaching_load.data.labels =  courses.filter((course) => (course.type == type)).map((course)=>course['course_id'])
+          console.log('diff de all',teaching_load.data.labels)
+        }else if (type == 'All' ){
+          teaching_load.data.labels =  teaching_o1
+          console.log('all,all',teaching_load.data.labels)
+        }
+
+
+        console.log('labels',teaching_load.data.labels.length);
+        console.log('value',typeselect.value.split(','))
+        console.log('typeselect',typeselect.value)
+
+        //console.log('teaching',teaching_load.data.datasets[0].data,'t',typeselect.value.split(','))
+        teaching_load.data.datasets[0].data = typeselect.value.split(',{');
+        console.log('load',teaching_load.data.datasets[0])
+        teaching_load.update();
+      } 
+
+ </script>
+
+</div> {%endblock%}
+
+
+
+
+

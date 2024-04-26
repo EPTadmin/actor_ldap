@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{%block title %}
+List of Courses Industrial Ecology Programme
+{%endblock title %}
+
+{%block content%}
+<h1>Courses IndEcol</h1>
+
+<ul class = "list-group">
+    Course Type O1 :
+    <br>
+    
+    {%for course in courses_indecol%}
+    {%if course.group == 'i'%}
+    
+    {%if course.type == 'O1'%}
+        <a class = "list-group-item list-group-item-action" href = " {% url 'course_details' course.id %}">
+            {{course}}
+        </a>  
+    {%endif%}
+    {%endif%}
+    
+    {%endfor%}
+    <br>
+    
+    Course Type O2 :
+    <br>
+    
+    {%for course in courses_indecol%}
+    {%if course.group == 'i'%}
+    
+    {%if course.type == 'O2'%}
+        <a class = "list-group-item list-group-item-action" href = " {% url 'course_details' course.id %}">
+            {{course}}
+        </a>  
+    {%endif%}
+    {%endif%}
+    
+    {%endfor%}
+    <br>
+    
+    Course Type FE :
+    <br>
+    
+    {%for course in courses_indecol%}
+    {%if course.group == 'i'%}
+    
+    {%if course.type == 'FE'%}
+        <a class = "list-group-item list-group-item-action" href = " {% url 'course_details' course.id %}">
+            {{course}}
+        </a>  
+    {%endif%}
+    {%endif%}
+    
+    {%endfor%}
+    <br>
+    
+    Course Type FP :
+    <br>
+    
+    {%for course in courses_indecol%}
+    {%if course.group == 'i'%}
+    
+    {%if course.type == 'FP'%}
+        <a class = "list-group-item list-group-item-action" href = " {% url 'course_details' course.id %}">
+            {{course}}
+        </a>  
+    {%endif%}
+    {%endif%}
+    
+    {%endfor%}
+    <br>
+    
+    Course Type MS :
+    <br>
+    
+    {%for course in courses_indecol%}
+    
+    {%if course.type == 'MS'%}
+        <a class = "list-group-item list-group-item-action" href = " {% url 'course_details' course.id %}">
+            {{course}}
+        </a>  
+    {%endif%}
+    
+    {%endfor%}
+    <br>
+    
+    Course Type PH :
+    <br>
+    
+    {%for course in courses_indecol%}
+    
+    {%if course.type == 'PH'%}
+        <a class = "list-group-item list-group-item-action" href = " {% url 'course_details' course.id %}">
+            {{course}}
+        </a>  
+    {%endif%}
+    
+    {%endfor%}
+    <br>
+    
+    Course Type Other :
+    <br>
+    
+    {%for course in courses_indecol%}
+    {%if course.group == 'i'%}
+    
+    {%if course.type == '-'%}
+        <a class = "list-group-item list-group-item-action" href = " {% url 'course_details' course.id %}">
+            {{course}}
+    
+        </a>  
+    {%endif%}
+    {%endif%}
+    
+    {%endfor%}
+    </ul>
+    {%endblock content%}

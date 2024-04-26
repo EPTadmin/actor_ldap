@@ -1,0 +1,122 @@
+{% load static %}
+
+<html>
+
+<head>
+    <link rel="stylesheet" href="{% static 'res/css/theme.css' %}" />
+    <title>
+        {% block title %}
+        TEST database
+        {% endblock title %}
+    </title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+        <img src="{% static 'res/img/industrial-ecology.png' %}" width="60" height="auto" alt="Rocket ship logo" />
+        <a class="navbar-brand tk-elevon" href="#">&nbsp; Test database</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar"
+            aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" style="color:green" href="{% url 'admin' %}">Admin</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" style="color:green" href="{% url 'plot' %}">Plot</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" style="color:green" href="{% url 'courses' %}">All Courses</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" style="color:blue" href="{% url 'courses_ses' %}">Courses SES</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color:blue" href="{% url 'courseperson_s' %}">SES Teaching load</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color:turquoise" href="{% url 'courses_indecol' %}">Courses IndEcol</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color:turquoise" href="{% url 'courseperson_i' %}">Indecol Teaching load</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color:red" href="{% url 'courses_process' %}">Courses Process</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color:red" href="{% url 'courseperson_p' %}">Process Teaching load</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color:orange" href="{% url 'courses_thermo' %}">Courses Thermo-Fluis</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color:orange" href="{% url 'courseperson_t' %}">Thermo Teaching load</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color:green" href="{% url 'persons' %}">Persons</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link"  style="color:green" href="{% url 'bootstrap_form' %}">Filter database</a>
+                </li>  
+
+                <li class="nav-item">
+                    <a class="nav-link"  href="{% url 'about' %}">About</a>
+                </li>
+                
+                {% comment %} <li class="nav-item">
+                    <a class="nav-link" href="#">Login</a>
+                </li> {% endcomment %}
+            </ul>
+        </div>
+    </nav>
+
+    <main role="main">
+        <div class="jumbotron main-header" style="background-image: url({% static 'res/img/Bandeau.jpg' %}); background-size: cover;">
+            <div class="container">
+                <div class="row">
+                    {% comment %} <div class="col-md-4">
+                        <img src="{% static 'res/img/bit_cosmos.png' %}" class="img img-fluid" />
+                    </div> {% endcomment %}
+                    {% comment %} <div class="col-md-8 ml-md-auto align-self-center">
+                        <h1 class="display-1">Filter Master projects</h1>
+                    </div> {% endcomment %}
+                </div>
+            </div>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}'
+            <div class="alert alert-{{message.tags}}" role="alert">
+                <p>{{ message }}</p>
+            </div>   
+            {% endfor %}
+        {% endif %}
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <img class="mr-3 img-fluid" src="{% static 'res/img/system.png' %}" alt="Astronaut looking into space" />
+                </div>
+                <div class="col-md-8">
+
+                    {% block content %}
+                    <h1 class="display-4 tk-elevon">Lorem Ipsum Dolor</h1>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    {% endblock content %}
+                    
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="container">
+        <p>&copy; EPT 2023</p>
+    </footer>
+</body>
+
+</html>

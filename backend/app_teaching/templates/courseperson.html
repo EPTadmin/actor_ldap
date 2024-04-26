@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{%block title %}
+courseperson
+{%endblock title %}
+
+{%block content%}
+<h1>Course / Person</h1>
+
+<ul class = "list-group">
+
+{%for a in  coursepersons%}{%if a.course.group != 's' %}{%if a.course.type != 'FP' %}{%if a.course.type != 'FS' %}{%if a.course.type != 'MS' %}{%if a.course.semester == 'H'%} {% ifchanged  %}<b><br>{{a.course}}</b>{% endifchanged %}
+<p>{{a.person}} {{a.amount}}
+{%endif%}{%endif%}{%endif%}{%endif%}{%endif%}{%endfor%}
+
+</ul>
+
+
+
+{%endblock content%}

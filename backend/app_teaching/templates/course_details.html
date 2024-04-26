@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{%block title %}
+{{course}}
+{%endblock title %}
+
+{%block content%}
+<h1>{{course}}</h1>
+
+
+<p><b>Short name : </b>{{course.course_id}}</p>
+<p><b>Full name : </b>{{course.name}}</p>
+
+<p><b>Type of course : </b>{{course.type}}</p>
+<p><b>Semester : </b>{{course.semester}}</p>
+<p><b>Studiepoeng : </b>{{course.studiepoeng}}</p>
+<p><b>Total umber of students : </b>{{course.nb_student}}</p>
+<p><b>Total number of Vit. ass. : </b>{{course.nb_vit}}</p>
+<p><b>Total number of Stud. ass : </b>{{course.nb_stud_ass}}</p>
+{% comment %} <p><b>Lecturers :</b>
+    {%for person in course.courses.all%}
+        <a>{{person}}</a>,   
+    {%endfor%}
+</p> {% endcomment %}
+
+<b>List of persons involved in the project : </b>
+<ul class ="list-group">
+    {%for person in course.courses.all%}
+    <a class = "list-group-item list-group-item-action" href={%url 'person_details' person.id %}>{{person}}</a>
+    {%endfor%}
+
+</ul>
+
+{%endblock content%}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{%block title %}
+courseperson
+{%endblock title %}
+
+{%block content%}
+
+<h2>Semester H</h1><br>
+<h3>O1</h3>
+<ul class = "list-group">
+
+{%for a in  coursepersons%}{%if a.course.type == 'O1' %}{%if a.course.group == 't' %}{%if a.course.semester == 'H'%} {% ifchanged  %}<b><br>{{a.course}}</b>{% endifchanged %}
+<p>{{a.person}} : {{a.amount}} % 
+{%endif%}{%endif%}{%endif%}{%endfor%}
+
+</ul>
+<h3>O2</h3>
+<ul class = "list-group">
+
+{%for a in  coursepersons%}{%if a.course.type == 'O2' %}{%if a.course.group == 't' %}{%if a.course.semester == 'H'%} {% ifchanged  %}<b><br>{{a.course}}</b>{% endifchanged %}
+<p>{{a.person}} : {{a.amount}} % 
+{%endif%}{%endif%}{%endif%}{%endfor%}
+
+</ul>
+
+
+<h3>PH</h3>
+<ul class = "list-group">
+
+{%for a in  coursepersons%}{%if a.course.type == 'PH' %}{%if a.course.group == 't' %}{%if a.course.semester == 'H'%} {% ifchanged  %}<b><br>{{a.course}}</b>{% endifchanged %}
+<p>{{a.person}} : {{a.amount}} % 
+{%endif%}{%endif%}{%endif%}{%endfor%}
+
+</ul>
+<h2>Semester V</h1>
+    <h3>O1</h3>
+    <ul class = "list-group">
+    
+    {%for a in  coursepersons%}{%if a.course.type == 'O1' %}{%if a.course.group == 't' %}{%if a.course.semester == 'V'%} {% ifchanged  %}<b><br>{{a.course}}</b>{% endifchanged %}
+    <p>{{a.person}} : {{a.amount}} % 
+    {%endif%}{%endif%}{%endif%}{%endfor%}
+    
+    </ul>
+    <h3>O2</h3>
+    <ul class = "list-group">
+    
+    {%for a in  coursepersons%}{%if a.course.type == 'O2' %}{%if a.course.group == 't' %}{%if a.course.semester == 'V'%} {% ifchanged  %}<b><br>{{a.course}}</b>{% endifchanged %}
+    <p>{{a.person}} : {{a.amount}} % 
+    {%endif%}{%endif%}{%endif%}{%endfor%}
+    
+    </ul>
+
+    
+    <h3>PH</h3>
+    <ul class = "list-group">
+    
+    {%for a in  coursepersons%}{%if a.course.type == 'PH' %}{%if a.course.group == 't' %}{%if a.course.semester == 'V'%} {% ifchanged  %}<b><br>{{a.course}}</b>{% endifchanged %}
+    <p>{{a.person}} : {{a.amount}} % 
+    {%endif%}{%endif%}{%endif%}{%endfor%}
+    
+    </ul>
+
+{%endblock content%}

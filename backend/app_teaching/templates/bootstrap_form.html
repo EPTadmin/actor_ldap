@@ -1,0 +1,245 @@
+
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <title>Filter projects</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'templates.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                  <a class="nav-link" href="/">Home</a>
+              </li>
+              {% comment %} <li class="nav-item">
+                  <a class="nav-link" href="#">React</a>
+              </li> {% endcomment %}
+            </ul>
+        </div>
+    </nav>
+
+    <main role="main" class="container" >
+
+      <h3>Filter Course</h3>
+      <form method="GET" action="." >
+        {% comment %} <div class="form-row">
+          <div class="form-group col-12">
+              <div class="input-group">
+                  <input class="form-control py-2 border-right-0 border" type="search" name="name_or_id_contain" placeholder="Name or ID of the project contains ..." />
+                  <span class="input-group-append">
+                      <div class="input-group-text bg-transparent">
+                          <i class="fa fa-search"></i>
+                      </div>
+                  </span>
+              </div>
+          </div>        
+      </div> 
+      <div class="form-row">
+        <div class="form-group col-12">
+            <div class="input-group">
+                <input class="form-control py-2 border-right-0 border" type="search" name="description_contains" placeholder="Description of the project contains ..." />
+                <span class="input-group-append">
+                    <div class="input-group-text bg-transparent">
+                        <i class="fa fa-search"></i>
+                    </div>
+                </span>
+            </div>
+        </div>        
+    </div> 
+         {% endcomment %}
+
+
+
+
+        <div class="form-group col-md-4">
+          <label for="course_type">Course Type</label>
+          <select id="course_type" class="form-control" name="course_type">
+            <option selected>Choose...</option>
+            {% for type in categories %}
+            <option value="{{ type }}">{{ type }}</option>
+            {% endfor %}
+          </select>
+        </div> 
+
+        <div class="form-group col-md-4">
+          <label for="course_groupe">Course Group</label>
+          <select id="course_groupe" class="form-control" name="course_groupe">
+            <option selected>Choose...</option>
+            {% for type in groups %}
+            <option value="{{ type }}">{{ type }}</option>
+            {% endfor %}
+          </select>
+        </div> 
+
+        {% comment %} <div class="form-group col-md-4">
+          <label for="person">Lecturers</label>
+          <select id="person" class="form-control" name="person">
+            <option selected>Choose...</option>
+            {% for person in persons %}
+            <option value="{{ person }}">{{ person }}</option>
+            {% endfor %}
+          </select>
+        </div>  {% endcomment %}
+        {% comment %} <div class="form-group col-md-4">
+          <label for="pro_type">Project Type</label>
+          <select id="pro_type" class="form-control" name="pro_type">
+            <option selected>Choose...</option>
+            {% for type in categories %}
+            <option value="{{ type }}">{{type}}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="keyword">Keyword</label>
+          <select id="keyword" class="form-control" name="keyword">
+            <option selected>Choose...</option>
+            {% for keyword in keywords %}
+            <option value="{{ keyword }}">{{keyword}}</option>
+            {% endfor %}
+          </select>
+        </div>  {% endcomment %}
+
+
+        {% comment %} <div class="form-group">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="reviewed" name="reviewed">
+            <label class="form-check-label" for="reviewed">
+              Reviewed
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="notReviewed" name="notReviewed">
+            <label class="form-check-label" for="notReviewed">
+              Not reviewed
+            </label>
+          </div>
+        </div>  {% endcomment %}
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+
+      <hr />
+
+      <div class="row">
+        <ul>
+          {% for course in  queryset %}
+            <li>
+              {%if course.type  != 'MS'%}{%if course.type != 'FP' %}
+             <span><b>Course_id: </b>{{ course.course_id }}</span><p>
+              <span><b>Name: </b>{{ course.name }}</span><p>
+              {% comment %} <span><b>Type : </b> {{ course.type }}</span><p> {% endcomment %}
+              {% comment %} <span><b>Group : </b> {{ course.group }}</span><p> {% endcomment %}
+
+              <span>
+                <b>Person working on the project : </b><br>
+                {% comment %} <script>
+                  var sum = 0
+                </script> {% endcomment %}
+
+                  {% for person in course.courses.all  %}
+                  {{person.first_name}} {{person.last_name}} ,
+                {% comment %} {% endfor %} {% endcomment %}
+                
+
+                {% for person2 in  personcourse %}
+                {%if person == person2.person %} 
+                {%if course == person2.course %}
+                {{person2.amount}} %<br>
+                {%endif%}
+                {%endif%}
+                {{amount_total}}
+                {% endfor %}
+                {% endfor %}
+
+              </span><p> 
+
+            </li>
+            <hr />
+            {%endif%}
+
+            {%endif%}
+            {%if course.type  == 'MS'%}
+            <span><b>Course_id: </b>{{ course.course_id }}</span><p>
+             <span><b>Name: </b>{{ course.name }}</span><p>
+             {% comment %} <span><b>Type : </b> {{ course.type }}</span><p> {% endcomment %}
+             {% comment %} <span><b>Group : </b> {{ course.group }}</span><p> {% endcomment %}
+
+             <span>
+               <b>Person working on the project : </b><br>
+               {% comment %} <script>
+                 var sum = 0
+               </script> {% endcomment %}
+
+                 {% for person in course.courses.all  %}
+                 {{person.first_name}} {{person.last_name}} ,
+               {% comment %} {% endfor %} {% endcomment %}
+               
+
+               {% for person2 in  personcourse %}
+               {%if person == person2.person %} 
+               {%if course == person2.course %}
+               {{person2.amount}} students(s)<br>
+               {%endif%}
+               {%endif%}
+               {% endfor %}
+               {% endfor %}
+
+             </span><p> 
+
+           </li>
+           <hr />
+           {%endif%}
+           {%if course.type  == 'FP'%}
+           <span><b>Course_id: </b>{{ course.course_id }}</span><p>
+            <span><b>Name: </b>{{ course.name }}</span><p>
+            {% comment %} <span><b>Type : </b> {{ course.type }}</span><p> {% endcomment %}
+            {% comment %} <span><b>Group : </b> {{ course.group }}</span><p> {% endcomment %}
+
+            <span>
+              <b>Person working on the project : </b><br>
+              {% comment %} <script>
+                var sum = 0
+              </script> {% endcomment %}
+
+                {% for person in course.courses.all  %}
+                {{person.first_name}} {{person.last_name}} ,
+              {% comment %} {% endfor %} {% endcomment %}
+              
+
+              {% for person2 in  personcourse %}
+              {%if person == person2.person %} 
+              {%if course == person2.course %}
+              {{person2.amount}} students(s)<br>
+              {%endif%}
+              {%endif%}
+              {% endfor %}
+              {% endfor %}
+
+            </span><p> 
+
+          </li>
+          <hr />
+          {%endif%}
+          {% endfor %}
+        </ul>
+      </div> 
+
+    </main>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

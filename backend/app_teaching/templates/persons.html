@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{%block title %}
+List of Persons involed at Indecol
+{%endblock title %}
+
+{%block content%}
+<h1>Person</h1>
+
+<ul class = "list-group">
+    <br>
+<h2>SES</h2>
+
+{%for person in persons%}
+
+{%if person.groupe == 's' %} 
+    <a class = "list-group-item list-group-item-action" href = " {% url 'person_details' person.id %}">
+        {{person}}
+    </a>
+{%endif%} 
+{%endfor%}
+
+<br>
+<h2>Indecol</h2>
+
+{%for person in persons%}
+
+{%if person.groupe == 'i' %} 
+    <a class = "list-group-item list-group-item-action" href = " {% url 'person_details' person.id %}">
+        {{person}}
+    </a>
+{%endif%} 
+{%endfor%}
+
+<br>
+<h2>Process</h2>
+
+{%for person in persons%}
+
+{%if person.groupe == 'p' %} 
+    <a class = "list-group-item list-group-item-action" href = " {% url 'person_details' person.id %}">
+        {{person}}
+    </a>
+{%endif%} 
+{%endfor%}
+
+<br>
+<h2>Thermo-Fluid</h2>
+
+{%for person in persons%}
+
+{%if person.groupe == 't' %} 
+    <a class = "list-group-item list-group-item-action" href = " {% url 'person_details' person.id %}">
+        {{person}}
+    </a>
+{%endif%} 
+{%endfor%}
+
+</ul>
+{%endblock content%}
