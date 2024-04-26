@@ -6,8 +6,8 @@ services:
     volumes:
       - ./data:/data
       - static:/app/static
-    env_file:
-      - .env
+        # env_file:
+        # - .env
     build:
       context: ./backend 
     ports:
