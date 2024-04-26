@@ -9,7 +9,7 @@ import{useForm} from 'react-hook-form'
 import AxiosInstance from './Axios';
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({setcurrent_user}) => {
     const{handleSubmit, control} = useForm()
     const navigate=useNavigate()
     const submission = (data) => {
@@ -19,9 +19,10 @@ const Login = () => {
         })
 
         .then((response) => {
+            setcurrent_user(response.data)
             console.log('response',response)
-            localStorage.setItem('Token',response.data.token)
-            navigate(`/home`)
+            // localStorage.setItem('Token',response.data.token)
+            // navigate(`/home`)
         })
         .catch((error)=>{
             console.error('Error during login',error)

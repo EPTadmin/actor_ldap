@@ -1,7 +1,5 @@
 import React from 'react';
 import './App.css';
-import BarChart from './components/Chart_nb_student';
-import {Chart} from 'chart.js';
 import {Routes, Route,useLocation} from 'react-router-dom';
 import Home from './components/Home';
 import About from './components/About';
@@ -25,29 +23,32 @@ import Test from './components/Chart_test';
 import Edit_position from './components/Edit_position';
 import SP from './components/Chart_sp';
 import Login from './components/Login';
-import ProtectedRoutes from './components/ProtectedRoutes';
+import { useState } from 'react';
+// import ProtectedRoutes from './components/ProtectedRoutes';
+
+
 function App() {
+  const [current_user,setcurrent_user] = useState()
   const location=useLocation()
-  const noNavbar = location.pathname === "/"
+  const noNavbar =  !current_user
 
   const myWidth = 220
   return (
     <div className="App">
       {
       noNavbar ?
-      <Routes>
-        <Route path ="/" element={<Login/>}/>
-      </Routes>
- 
+      
+        <Login
+          setcurrent_user = {setcurrent_user}
+        /> 
       :
-
-
 
       <Navbar drawerWidth={myWidth}
         content ={      
         <Routes>
-          <Route element={<ProtectedRoutes/>}>
-          <Route path ="/home" element={<Home/>}/>
+          
+          {/* <Route element={<ProtectedRoutes/>}> */}
+          <Route path ="/" element={<Home/>}/>
           <Route path ="/about" element={<About/>}/>
           <Route path ="/create" element={<Create/>}/>
           <Route path ="/edit/:id" element={<Edit/>}/>
@@ -72,7 +73,7 @@ function App() {
           <Route path ="/chart_courses_t" element={<BarChart_t/>}/>
           <Route path ="/chart_load" element={<BarChart_load/>}/>
           <Route path ="/chart_sp" element={<SP/>}/>
-          </Route>
+          {/* </Route> */}
        </Routes>
       }
       />
