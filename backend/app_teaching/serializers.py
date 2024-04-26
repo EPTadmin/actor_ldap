@@ -1,29 +1,38 @@
 from rest_framework import serializers
 from . models import *
 from django.contrib.auth import get_user_model
+from django.contrib.auth import authenticate
 
-User = get_user_model()
+# User = get_user_model()
 
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', "password", "first_name",  "last_name", "email",  "is_superuser")
+
+    
 class LoginSerializers(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()
     
-    def  to_representation(self, instance):
-        ret = super().to_representation(instance)
-        ret.pop('password',None)
-        return ret
+    def check_user(self, clean_data):
+        user = authenticate(username=clean_data['username'], password=clean_data['password'])
+        if not user:
+            raise LookupError('user not found')
+        return user
 
 
 
-class RegisterSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ("id","username","password")
-        extra_kwargs = { 'password':{'write_only':True}}
+# class RegisterSerializers(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = ("id","username","password")
+#         extra_kwargs = { 'password':{'write_only':True}}
 
-        def create(self,validated_data):
-            user =User.objects.create_user(**validated_data)
-            return user
+#         def create(self,validated_data):
+#             user =User.objects.create_user(**validated_data)
+#             return user
 
 class CourseSerializers(serializers.ModelSerializer):
     class Meta:

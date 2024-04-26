@@ -10,12 +10,15 @@ router.register('person',PersonViewset,basename = 'person')
 router.register('person_course',PersonCourseViewset,basename = 'person_course')
 router.register('person_activity',PersonActivityViewset,basename = 'person_activity')
 router.register('position_activity',PositionActivityViewset,basename = 'position_activity')
-router.register('login',LoginViewset,basename = 'login')
-router.register('register',RegisterViewset,basename = 'register')
+# router.register('login',LoginViewset,basename = 'login')
+# router.register('register',RegisterViewset,basename = 'register')
 
 # router.register('login',LoginViewset)
 
 urlpatterns = [path('api/', include((router.urls, 'app_teaching'))),
+                path('api/login/', views.LDAPLogin.as_view()),
+                path('api/logout/', views.LDAPLogout.as_view()),
+                path('api/loggeduser/', views.UserView.as_view()),
                ]
 
 

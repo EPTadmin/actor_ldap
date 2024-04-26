@@ -19,7 +19,7 @@ ALLOWED_HOSTS = ["*"]
 CORS_ORIGIN_ALLOW_ALL = True   
 CORS_ALLOW_CREDENTIALS = True
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
-
+CSRF_TRUSTED_ORIGINS = ['http://*.localhost','http://*.127.0.0.1', 'http://*.0.0.0.0','http://*.10.212.25.10' , 'http://*.actor.ept.ntnu.no', 'https://*.actor.ept.ntnu.no']
 # Application definition
 
 INSTALLED_APPS = [
@@ -102,7 +102,7 @@ AUTHENTICATION_BACKENDS = [
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
-CSRF_TRUSTED_ORIGINS = ['http://*.localhost','http://*.10.212.25.10','http://*.192.168.24.203','http://*.actor.ept.ntnu.no','https://*.actor.ept.ntnu.no']
+CSRF_TRUSTED_ORIGINS = ['http://*.localhost','http://*.10.212.25.10','http://*.192.168.24.203']
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
