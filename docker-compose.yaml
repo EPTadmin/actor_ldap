@@ -4,10 +4,10 @@ services:
   backend:
     container_name: backend
     volumes:
-      - ./data:/data
+      - ./data:/data 
       - static:/app/static
     #env_file:
-     # - .env
+    # - .env
     build:
       context: ./backend 
     ports:
@@ -23,6 +23,7 @@ services:
     volumes:
       - static:/django_static
       - frontend:/var/www/frontend
+      - ./data:/data  
     ports:
       - "0.0.0.0:80:80"
     depends_on:

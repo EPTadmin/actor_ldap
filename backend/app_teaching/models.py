@@ -19,7 +19,7 @@ role_choices = (
     ('P2','P2'),
     ('F2','F2'),
     ('L','L'),
-    ('Ext','Ext')
+    ('Ext','Ext'),
 )
 
 groupe_choices = (
@@ -35,6 +35,7 @@ course_group_choices = (
     ('p','p'),
     ('t','t'),
     ('i','i'),
+    ('off','off'),
 )
 
 course_type_choices = (
@@ -126,8 +127,9 @@ class User(AbstractUser):
     pass
 
 
+class test(models.Model):
 
-
+    pass
 class Course(models.Model):
 
     course_id = models.CharField(

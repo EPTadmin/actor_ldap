@@ -1,6 +1,11 @@
 import axios from 'axios'
 
-const baseUrl = 'http://127.0.0.1:8000/api/'
+const baseUrl = '/api/'
+
+
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+axios.defaults.withCredentials = true;
 
 const AxiosInstance = axios.create({
     baseURL :baseUrl,

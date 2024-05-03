@@ -38,7 +38,7 @@ export default function MyGroupField(props) {
                     <MenuItem value={'i'}>i</MenuItem>
                     <MenuItem value={'t'}>t</MenuItem>
                     <MenuItem value={'p'}>p</MenuItem>
-                    
+                    <MenuItem value={'off'}>off</MenuItem> 
                 </Select>
                 <FormHelperText sx={{color:"#d32f2f"}}>{error?.message} </FormHelperText>
                 </FormControl>
