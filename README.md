@@ -1,4 +1,7 @@
 # actor
+
+Link to the app : http://actor.ept.ntnu.no/
+
 ACTOR stands for teAChing posiTiOn Role
 
 ACTOR is an app composed of a react frontend and django backend.
