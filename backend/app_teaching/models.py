@@ -127,9 +127,7 @@ class User(AbstractUser):
     pass
 
 
-class test(models.Model):
 
-    pass
 class Course(models.Model):
 
     course_id = models.CharField(
@@ -227,12 +225,14 @@ class Person(models.Model):
      
     courses = models.ManyToManyField(
         Course,
+        through='PersonCourse',
         null = True,
         related_name='courses'
     )
 
     activities = models.ManyToManyField(
         Position_Activity,
+        through='PersonActivity',
         related_name='activities'
     )
 
@@ -246,6 +246,12 @@ class PersonCourse(models.Model):
     person = models.ForeignKey(Person,on_delete=models.CASCADE) 
     course = models.ForeignKey(Course,on_delete=models.CASCADE) 
     amount = models.IntegerField()
+    comment = models.CharField(
+        unique=False,
+        null=True,
+        blank=True,
+        max_length=50
+    )
 
     # def __int__(self):
     #     return self.amount

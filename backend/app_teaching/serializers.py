@@ -69,7 +69,7 @@ class PersonCourseSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = PersonCourse
-        fields = ['id','person','course','person_full','course_full','amount']
+        fields = ['id','person','course','person_full','course_full','amount','comment']
 
     def get_person_full(self,obj):
         return obj.person.first_name + ' ' + obj.person.last_name 

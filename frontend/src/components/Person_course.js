@@ -30,6 +30,8 @@ const Person_course = () => {
    
     },[])
 
+    console.log('person course',myData)
+
 
 
     
@@ -63,6 +65,11 @@ const Person_course = () => {
             accessorKey: 'amount', //normal accessorKey
             header: 'Amount',
             size: 4,
+          },
+          {
+            accessorKey: 'comment', //normal accessorKey
+            header: 'Comment',
+            size: 10,
           },
 
           
@@ -100,9 +107,9 @@ const Person_course = () => {
                         <EditIcon />
                     </IconButton>
 
-                    {/* <IconButton color="error" component = {Link} to={`delete_teaching/${row.original.id}`}>
+                    <IconButton color="error" component = {Link} to={`delete_person_course/${row.original.id}`}>
                         <DeleteIcon />
-                    </IconButton> */}
+                    </IconButton>
                     </Box>
       )}
 

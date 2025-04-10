@@ -6,10 +6,13 @@ import Select from '@mui/material/Select';
 import {Controller} from 'react-hook-form'
 import FormHelperText from '@mui/material/FormHelperText';
 
-export default function MyGroupField(props) {
-  const{label,name, width,control} = props
-
-
+export default function MyCoursechooseField(props) {
+    const{label,name, width,control,options} = props
+    options.sort(function(a, b) {
+        var textA = a.course_id.toLowerCase();
+        var textB = b.course_id.toLowerCase();
+        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    });
 
   return (
 
@@ -31,14 +34,19 @@ export default function MyGroupField(props) {
                     value = {value}
                     error = {!!error}  
                     >
-                    <MenuItem value="">
-                        <em></em>
-                    </MenuItem>
-                    <MenuItem value={'s'}>s</MenuItem>
+                    {
+                        options.map((option)=>(
+                            <MenuItem value={option.id}>{option.course_id } {option.name}
+                            <em></em>
+                        </MenuItem>
+                        ))
+                    }
+
+                    {/* <MenuItem value={'s'}>s</MenuItem>
                     <MenuItem value={'i'}>i</MenuItem>
                     <MenuItem value={'t'}>t</MenuItem>
                     <MenuItem value={'p'}>p</MenuItem>
-                    <MenuItem value={'off'}>off</MenuItem>
+                    <MenuItem value={'off'}>off</MenuItem> */}
 
                     
                 </Select>

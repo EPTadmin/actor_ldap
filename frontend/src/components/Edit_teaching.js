@@ -22,6 +22,7 @@ const Edit_teaching = () => {
            setValue ('person',res.data.person)
            setValue ('course',res.data.course)
            setValue ('amount',res.data.amount)
+           setValue ('comment',res.data.comment)
 
 
 
@@ -47,6 +48,8 @@ const Edit_teaching = () => {
         person:'',
         course:'',
         amount:'',
+        comment:'',
+
         // full_name:'',
         // full_course:'',
         // position:'',
@@ -65,6 +68,8 @@ const Edit_teaching = () => {
             person: data.person,
             course: data.course,
             amount: data.amount,
+            comment: data.comment,
+
             // full_name: data.full_name,
             // full_course: data.full_course,
             // position: data.position,
@@ -151,6 +156,13 @@ const Edit_teaching = () => {
                 />
 
 
+            <MyTextField
+                 label = "Comment"
+                 name="comment"
+                 control={control}
+                 placeholder="comment"
+                 width={'30%'}
+                />
 
 
 
